@@ -244,3 +244,17 @@ root@551e15def4a3:/# ping app1
 We can also log to *app4* and ping app1 or *app2*. It will also work.
 
 # Link youtube: https://youtu.be/dQHWmIoTs4k?si=k_GK1ro7N-Ciz9hj
+
+# PORTAINER
+Portainer is the worlds' most popular universal container management platform with more than 650,000 active monthly users. Portainer can be used to manage Docker Standalone, Kubernetes and Docker Swarm environments through a single common interface. It includes a simple GitOps automation engine and a Kube API.
+
+Create a portainer to manage your containers
+
+```bash
+docker run -d -p 9000:9000 --name portainer \
+  --restart unless-stopped \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -v portainer_data:/data \
+  portainer/portainer-ce
+```
+# Link to portainer documentation: https://hub.docker.com/extensions/portainer/portainer-docker-extension
