@@ -105,5 +105,133 @@ NETWORK ID     NAME                    DRIVER    SCOPE
 
 ~ $ docker run --rm -d --name app4 -p 8004:80 --network custom_network <image:v1>
 ```
+-6) inspect containers 
+
+Inspect container “app3” 
+```bash
+~$ docker inspect app3 | grep -i IPAddress
+```
+Output
+```bash
+            "SecondaryIPAddresses": null,
+            "IPAddress": "172.17.0.4",
+                    "IPAddress": "172.17.0.4",
+```
+
+# Inspect container “app2” 
+```bash
+~$ docker inspect app2 | grep -i IPAddress
+```
+Output:
+```bash
+            "SecondaryIPAddresses": null,
+            "IPAddress": "172.17.0.5",
+                    "IPAddress": "172.17.0.5",
+```
+
+-7) login to container “app3” and ping "app4"
+
+```bash
+~$ docker exec -it  app3 bash
+```
+Ping container “app4”. Here we ping by container's name and not by ip addresses as we saw in previous steps.
+```bash
+root@551e15def4a3:/# ping app4
+```
+
+8) Connet to container(s) using a custom networks. Here you want to connect to a container runing in a *default* network from *custom* network
+
+i) Connect to *app1* container
+```bash
+~$ docker network connect <your_custom_network_name> app1
+
+# That is ~$ docker network connect <your_custom_network_name> <container_name>
+```
+ii) Connect to *app2* container
+```bash
+~$ docker network connect <your_custom_network_name> app2
+
+# That is ~$ docker network connect <your_custom_network_name> <container_name>
+```
+That is your custom network has successfully allowed bridge network containers.
+
+9) Inspect 'custom'network: Here we'll see different networks and the various containers running within them.
+```bash
+~$ docker network inspect <your_custom_network_name> 
+```
+Output:
+
+```bash
+"Name"
+"Id":
+"<your_custom_network_name>",
+"46b19be696ac236f8edf{61ae6c7ca484e2a04508a0afa49dd95eff654dd1033*,
+"Created":
+*2024-06-24T04:39:34.138861889z",
+"Scope": "local",
+"Driver": "bridge",
+"EnableIPv6"; false,
+"IPAM": 1
+"Driver": "default",
+"Options": 0),
+"Config": [
+"Subnet": "172.18.0.0/16",
+"Gateway": "172.18.0.1"
+* 14 Essential DevOps...
+** Continuous Delivery-
+4
+N. Virginia +
+SaikiranPI +
+"Internal": false,
+"Attachable": false,
+"Ingress":
+false,
+"ConfigFrom":
+"Network":
+[Alt+S]
+"Configonly": false,
+"Containers": (
+"b3d2cd681977fb356dee2335659196ffda6ada508816b15f8c602d402b53be50*: (
+"Name"': "aPP!"4g53741229ecf£74{5838d49eb16b3152a38ed949e9da4caabb570£d457620ef1",
+"EndpointID":
+"MacAddress":
+"02:42:ac:12:00:04",
+"IPv4Address":
+"172.18.0.4/16",
+"IPv6Address":
+wn
+"e8a0198£092e67caa292a834d3dfd70787481de3ed658c0d4e15d86499171c7c": (
+"Name":
+"EndpointID":
+"1D"1"*Od1 650e5f798debddFb6ed4a58a79661df957c9b3Fac008587608a9f7de5c21a™,
+"MacAddress" : "02:42 :c:12:00:03",
+"IPv4Address":
+"172.18.0.3/16",
+"IPv6Address":
+"ed19d569ddd09c1b26078cb68ba4547d43757fdd0b75b98130a29230c9a3e2ce*: (
+"EndpointID"
+"Name": "app3":2512adaa29546d01a4e358a6720c9089440£c2e4e918dfa5970c079F01e5e227™,
+"MacAddress":
+"02:42 :ac:12:00:02",
+"IPv4Address": "172.18.0.2/16",
+"IPv6Address":
+之
+** Continuous Delivery-
+4
+N. Virginia +
+SaikiranPl y
+"Options":
+"Labels": ()
+```
+-10) login to container “app3” and ping "app1"
+
+```bash
+~$ docker exec -it  app3 bash
+```
+Ping container “app4”. Here we ping by container's since we already conneted to containers in a default network using custom network
+```bash
+root@551e15def4a3:/# ping app1
+```
+We can also log to app4 and ping app1 or app2. It will also work.
 
 # Link youtube: https://youtu.be/dQHWmIoTs4k?si=k_GK1ro7N-Ciz9hj
