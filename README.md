@@ -87,11 +87,11 @@ Output:
 ```
 List the docker network after creating your own custom network
 ```bash
-NETWORK ID     NAME                 DRIVER    SCOPE
-...3efd6   bridge                   bridge    local
-...7c9836   <your_network_name>     bridge    local
-...ead953   host                    host      local
-...71911   none                     null      local
+NETWORK ID     NAME                    DRIVER    SCOPE
+...3efd6       bridge                  bridge    local
+...7c9836      <your_network_name>     bridge    local
+...ead953      host                    host      local
+...71911       none                    null      local
 
 ```
 -5) Create containers within the custom network 
