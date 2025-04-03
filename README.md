@@ -30,7 +30,7 @@ Run the second container called app2. You can change the images depending on you
 ```bash
 ~$ docker run --rm -d --name app2 -p 8001:80  <image:v1>
 ``` 
-We inspect containers to get their zip addresses.
+We inspect containers to get their ip addresses.
 
 -2) inspect containers 
 
@@ -65,6 +65,8 @@ Ping container “app2”
 ```bash
 root@551e15def4a3:/# ping 172.17.0.3
 ```
+#           NOTE:  A Container runing on Docker Desktop doesn't recognize the `ping` command
+
 # NB: 
  a) This container remains at the background after stopping it because it does not have `-d` flag only
  ```bash
