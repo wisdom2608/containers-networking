@@ -32,29 +32,29 @@ We inspect containers to get their zip addresses.
 
 -2) inspect containers 
 
-Inspect container “app1” 
+Inspect container *app1* 
 ```bash
 ~$ docker inspect app1 | grep -i IPAddress
 ```
-Output
+*Output*:
 ```bash
             "SecondaryIPAddresses": null,
             "IPAddress": "172.17.0.2",
                     "IPAddress": "172.17.0.2",
 ```
 
-# Inspect container “app2” 
+# Inspect container *app2* 
 ```bash
 ~$ docker inspect app2 | grep -i IPAddress
 ```
-Output:
+*Output*:
 ```bash
             "SecondaryIPAddresses": null,
             "IPAddress": "172.17.0.3",
                     "IPAddress": "172.17.0.3",
 ```
 
--3) login to container “app1” and ping "app2"
+-3) login to container “app1” and ping *app2*
 
 ```bash
 ~$ docker exec -it  app1 bash
@@ -69,6 +69,7 @@ root@551e15def4a3:/# ping 172.17.0.3
 ~$ docker run -d --name app2 -p 8001:80  <image:v1>
 ```
  b) This container gets removed from the background after stopping it because it has a `--rm` flag. This means it will be removed after it's been stopped
+ 
  ```bash
 ~$ docker run --rm -d --name app2 -p 8001:80 <image:v1>
 ```
@@ -89,7 +90,7 @@ List the docker network after creating your own custom network
 ```bash
 ~ $ docker network list
 ```
-Output:
+*Output*:
 ```bash
 NETWORK ID     NAME                    DRIVER    SCOPE
 ...3efd6       bridge                  bridge    local
@@ -105,36 +106,36 @@ NETWORK ID     NAME                    DRIVER    SCOPE
 
 ~ $ docker run --rm -d --name app4 -p 8004:80 --network custom_network <image:v1>
 ```
--6) inspect containers 
+-6) Inspect containers created in *<your_network>* (custom network)
 
-Inspect container “app3” 
+*Inspect container app3*
 ```bash
 ~$ docker inspect app3 | grep -i IPAddress
 ```
-Output
+*Output*:
 ```bash
             "SecondaryIPAddresses": null,
             "IPAddress": "172.17.0.4",
                     "IPAddress": "172.17.0.4",
 ```
 
-# Inspect container “app2” 
+*Inspect container app4*
 ```bash
 ~$ docker inspect app2 | grep -i IPAddress
 ```
-Output:
+*Output*:
 ```bash
             "SecondaryIPAddresses": null,
             "IPAddress": "172.17.0.5",
                     "IPAddress": "172.17.0.5",
 ```
 
--7) login to container “app3” and ping "app4"
+-7) login to container *app3* and ping *app4*
 
 ```bash
 ~$ docker exec -it  app3 bash
 ```
-Ping container “app4”. Here we ping by container's name and not by ip addresses as we saw in previous steps.
+Ping container *“app4”*. Here we ping by container's name and not by ip addresses as we saw in previous steps.
 ```bash
 root@551e15def4a3:/# ping app4
 ```
@@ -155,11 +156,11 @@ ii) Connect to *app2* container
 ```
 That is your custom network has successfully allowed bridge network containers.
 
-9) Inspect 'custom'network: Here we'll see different networks and the various containers running within them.
+9) Inspect *custom* network: Here we'll see different networks and the various containers running within them.
 ```bash
 ~$ docker network inspect <your_custom_network_name> 
 ```
-Output:
+*Output*:
 
 ```bash
 "Name"
@@ -223,15 +224,15 @@ SaikiranPl y
 "Options":
 "Labels": ()
 ```
--10) login to container “app3” and ping "app1"
+-10) login to container “app3” and ping *app1*
 
 ```bash
 ~$ docker exec -it  app3 bash
 ```
-Ping container “app4”. Here we ping by container's since we already conneted to containers in a default network using custom network
+Ping container *app4*. Here we ping by container's since we already conneted to containers in a default network using custom network
 ```bash
 root@551e15def4a3:/# ping app1
 ```
-We can also log to app4 and ping app1 or app2. It will also work.
+We can also log to *app4* and ping app1 or *app2*. It will also work.
 
 # Link youtube: https://youtu.be/dQHWmIoTs4k?si=k_GK1ro7N-Ciz9hj
