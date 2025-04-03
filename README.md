@@ -101,3 +101,5 @@ NETWORK ID     NAME                 DRIVER    SCOPE
 
 ~ $ docker run --rm -d --name app4 -p 8004:80 --network custom_network <image:v1>
 ```
+
+# Link youtube: https://youtu.be/dQHWmIoTs4k?si=k_GK1ro7N-Ciz9hj
