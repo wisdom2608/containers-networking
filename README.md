@@ -8,8 +8,9 @@ Imagine  F1  lives in room 124 in a  hotel 🏨. Anytime F2 wants to play a game
 Containers that run in a default network run within a `bridge` network
 To see the list of network in your docker containers, run the command
 ```bash
-docker network list
-
+~ $ docker network list
+```
+```bash
 output:
 NETWORK ID     NAME     DRIVER   SCOPE
 ...3efd6       bridge   bridge   local
@@ -47,7 +48,6 @@ Output
 ~$ docker inspect app2 | grep -i IPAddress
 ```
 Output:
-Output
 ```bash
             "SecondaryIPAddresses": null,
             "IPAddress": "172.17.0.3",
@@ -86,6 +86,10 @@ Output:
 ...1079cc1864f2dd7ce0b
 ```
 List the docker network after creating your own custom network
+```bash
+~ $ docker network list
+```
+Output:
 ```bash
 NETWORK ID     NAME                    DRIVER    SCOPE
 ...3efd6       bridge                  bridge    local
