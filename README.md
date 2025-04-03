@@ -8,7 +8,8 @@ Imagine  F1  lives in room 124 in a  hotel 🏨. Anytime F2 wants to play a game
 𝑹𝑬𝑨𝑳𝑰𝑻𝒀: With the default bridge network, containers can communicate with each other using IP addresses but not with container names. Containers are stateless. That is, their ip addresses can be (are) changed when they die. To enable communication using container names, we need to create a custom (our own) network. In k8s we call it labels.
 
 Containers that run in a default network run within a `bridge` network
-To see the list of network in your docker containers, run the command
+
+-1) To see the list of network in your docker containers, run the command
 ```bash
 ~ $ docker network list
 ```
@@ -19,21 +20,24 @@ NETWORK ID     NAME     DRIVER   SCOPE
 ...ad953       host     host     local
 ...71911       none     null     local
 ```
--1) Run two containers 
+-2) Pull this image from docker hub 
 
-Run the first container called app1
 ```bash
-~$ docker run --rm -d --name app1 -p 8001:80  <image:v1>
+$ docker pull wisdom2608/network:v1.0.0
+```
+-3) Run two containers 
+
+-4) Run the first container called app1
+```bash
+~$ docker run --rm -d --name app1 -p 8001:80  wisdom2608/network:v1.0.0
 ```
 
 Run the second container called app2. You can change the images depending on your need
 ```bash
-~$ docker run --rm -d --name app2 -p 8001:80  <image:v1>
+~$ docker run --rm -d --name app2 -p 8001:80  wisdom2608/network:v1.0.0
 ``` 
-We inspect containers to get their ip addresses.
-
--2) inspect containers 
-
+-5) We inspect containers to get their ip addresses.
+ 
 Inspect container *app1* 
 ```bash
 ~$ docker inspect app1 | grep -i IPAddress
@@ -44,8 +48,8 @@ Inspect container *app1*
             "IPAddress": "172.17.0.2",
                     "IPAddress": "172.17.0.2",
 ```
+Inspect container *app2* 
 
-# Inspect container *app2* 
 ```bash
 ~$ docker inspect app2 | grep -i IPAddress
 ```
@@ -56,7 +60,7 @@ Inspect container *app1*
                     "IPAddress": "172.17.0.3",
 ```
 
--3) login to container “app1” and ping *app2*
+-6) login to container “app1” and ping *app2*
 
 ```bash
 ~$ docker exec -it  app1 bash
@@ -65,28 +69,28 @@ Ping container “app2”
 ```bash
 root@551e15def4a3:/# ping 172.17.0.3
 ```
-#           NOTE:  A Container runing on Docker Desktop doesn't recognize the `ping` command
+#           NOTE:  If ping command is not found, it means the Dockerfile for container image does have ping utility 
 
 # NB: 
  a) This container remains at the background after stopping it because it does not have `-d` flag only
  ```bash
-~$ docker run -d --name app2 -p 8001:80  <image:v1>
+~$ docker run -d --name app2 -p 8001:80 wisdom2608/network:v1.0.0
 ```
  b) This container gets removed from the background after stopping it because it has a `--rm` flag. This means it will be removed after it's been stopped
  
  ```bash
-~$ docker run --rm -d --name app2 -p 8001:80 <image:v1>
+~$ docker run --rm -d --name app2 -p 8001:80 wisdom2608/network:v1.0.0
 ```
  c) This container will be exited because it does not have the `-d` flag. It's runs on the terminal.
  ```bash
-~$ docker run --name app2 -p 8001:80  <image:v1>
+~$ docker run --name app2 -p 8001:80 wisdom2608/network:v1.0.0
 ```
 
 But this is not the recommended way to ping containers with their ip addresses. Containers are stateless, this means that if a container fails, its Ip address will change and pinging the container with old ip will keep on failing. The best way is to create a custom network for the containers so they can be pinged by their names.
 
 -4) To create your own custom network where your containers can run, run the command
 ```bash
-$ docker network create <your_networ_kname> --driver bridge
+$ docker network create <your_networ_kname --driver bridge
 Output:
 ...1079cc1864f2dd7ce0b
 ```
@@ -106,9 +110,9 @@ NETWORK ID     NAME                    DRIVER    SCOPE
 -5) Create containers within the custom network 
 
 ```bash
-~ $ docker run --rm -d --name app3 -p 8003:80 --network custom_network <image:v1>
+~ $ docker run --rm -d --name app3 -p 8003:80 --network custom_network wisdom2608/network:v1.0.0
 
-~ $ docker run --rm -d --name app4 -p 8004:80 --network custom_network <image:v1>
+~ $ docker run --rm -d --name app4 -p 8004:80 --network custom_network wisdom2608/network:v1.0.0
 ```
 -6) Inspect containers created in *<your_network>* (custom network)
 
