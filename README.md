@@ -3,7 +3,9 @@
 𝑨𝑵𝑨𝑳𝑶𝑮𝒀: Given F1 and F2
 Imagine  F1  lives in room 124 in a  hotel 🏨. Anytime F2 wants to play a game with F1, he visits the hotel and goes to room 124. It will be difficult for F2 to find F1 if he changes his hotel room, say F1 moves to room 289, or if F2 forgets the hotel room number for F1. The best way F2 do is to keep the name of F1, and ask from the receptionist every time he goes to the hotel rather than using his room number to trace him.
 
-𝑹𝑬𝑨𝑳𝑰𝑻𝒀: We do not use IP addresses to ping containers because containers are stateless. Rather we use containers names. In k8s we call it labels.
+# Why We Need a Custom Network for Containers
+
+𝑹𝑬𝑨𝑳𝑰𝑻𝒀: With the default bridge network, containers can communicate with each other using IP addresses but not with container names. Containers are stateless. That is, their ip addresses can be (are) changed when they die. To enable communication using container names, we need to create a custom (our own) network. In k8s we call it labels.
 
 Containers that run in a default network run within a `bridge` network
 To see the list of network in your docker containers, run the command
