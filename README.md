@@ -7,6 +7,23 @@ Imagine  F1  lives in room 124 in a  hotel 🏨. Anytime F2 wants to play a game
 
 𝑹𝑬𝑨𝑳𝑰𝑻𝒀: With the default bridge network, containers can communicate with each other using IP addresses but not with container names. Containers are stateless. That is, their ip addresses can be (are) changed when they die. To enable communication using container names, we need to create a custom (our own) network. In k8s we call it labels.
 
+This works when your docker Dockerfile to build the docker image has ping utility as a dependency. 
+
+Example:
+```bash
+FROM ubuntu/apache2:2.4-20.04_beta
+RUN apt-get update \
+    && apt-get install -y iputils-ping \
+    && apt-get install -y net-tools\
+    && apt-get install jq -y
+# Ping utils allow containers to test communication between containers in default and custom networks.
+
+
+#copy files into html directory 
+COPY web/* /var/www/html/
+
+ENTRYPOINT ["apachectl", "-D", "FOREGROUND"]
+```
 Containers that run in a default network run within a `bridge` network
 
 -1) To see the list of network in your docker containers, run the command
